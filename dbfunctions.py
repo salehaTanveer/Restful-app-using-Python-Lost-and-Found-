@@ -12,10 +12,10 @@ app.secret_key = "secretkey"
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'logged_in' in session:
+        if 'logged_in' in session:                              #check if session exists
             return f(*args, **kwargs)
         else:
-            flash('You need to login first.')
+            flash('You need to login first.')                   #else redirect to login
             return redirect(url_for('login'))
     return wrap
 
@@ -25,31 +25,37 @@ def login_required(f):
 
 Bootstrap(app)
 
+#redirect default route to login
 @app.route('/')
 def redirect_url():
     return redirect(url_for('login'))
 
+
+#register route
 @app.route('/register/', methods=['GET', 'POST'])
 def registration():
-    form = RegForm(request.form)
-    if request.method == 'POST' and form.validate_on_submit():
-        existing_user = User.query.filter_by(username=form.username.data).first()
-        if existing_user:
+    form = RegForm(request.form)                                                    #request wt-form names RegForm
+    if request.method == 'POST' and form.validate_on_submit():                      #validate form using validators defined in model.py
+        existing_user = User.query.filter_by(username=form.username.data).first()   #check for existing username
+        if existing_user:                                                           #if username ecxists, raise error else register and start session
             return 'user exists'
         else:
             new_user = User(form.username.data, form.password.data)
 
             db.session.add(new_user)
             db.session.commit()
-            return render_template('Home.html')
+            session['logged_in'] = True
+            return redirect(url_for('home'))
     return render_template('register.html', form=form)
 
+
+#login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm(request.form)
-    if request.method == 'POST' and form.validate_on_submit():
-        existing_user = User.query.filter_by(username=form.username.data).first()
-        if existing_user:
+    form = LoginForm(request.form)                                                  #request Wt-from named loginForm
+    if request.method == 'POST' and form.validate_on_submit():                      #validate form using validators defined in model.py
+        existing_user = User.query.filter_by(username=form.username.data).first()   #get username from db
+        if existing_user:                                                           #if exists check password else raise warning
             if existing_user.password == form.password.data:
                 session['logged_in'] = True
                 return redirect(url_for('home'))
@@ -62,14 +68,14 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-    session.pop('logged_in', None)
+    session.pop('logged_in', None)                                                  #end session
     flash('You are logged out!')
     return redirect(url_for('login'))
 
 @app.route('/home')
 @login_required
 def home():
-    return render_template('Home.html')
+    return render_template('Home.html')                                             #render home page
  
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -92,10 +98,10 @@ def search():
  
  
 # Update a Product
-@app.route('/update', methods=['PUT'])
-def update_product():
+@app.route('/update/<int:id>', methods=['PUT'])
+def update_product(id):
 
-  product = Product.query.get()
+  product = Product.query.get(id)
 
   name = request.json['name']
   description = request.json['description']
@@ -105,7 +111,23 @@ def update_product():
 
   db.session.commit()
 
-  return product_schema.jsonify(product)
+  return render_template('/insert', form=product)
+
+# Update a Product
+@app.route('/search/delete/<int:id>', methods=['POST'])
+def delete_product(id):
+
+  product = Product.query.get(id)
+
+  name = request.json['name']
+  description = request.json['description']
+
+  product.name = name
+  product.description = description
+
+  db.session.commit()
+
+  return render_template('/search', form=product)
 
 @app.route('/insert', methods=['GET', 'POST'])
 @login_required

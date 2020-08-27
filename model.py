@@ -24,4 +24,4 @@ class InsertForm(Form):
   location = StringField('Product Location',[validators.DataRequired()])
   Date = DateField('Date Found',default=date.today, format='%d-%m-%Y',validators=[validators.DataRequired(message="Date format day-month-year (10-12-2020)")])
   status = StringField('Product Status',[validators.DataRequired()])
-  submit = SubmitField('Register',[validators.DataRequired()])
+  submit = SubmitField('Submit',[validators.DataRequired()])
