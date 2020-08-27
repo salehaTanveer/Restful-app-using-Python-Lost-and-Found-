@@ -1,5 +1,6 @@
 #import libraries
 from flask import Flask, render_template
+from dbmodels import *
 
 #init app
 app = Flask(__name__)
