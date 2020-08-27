@@ -13,4 +13,4 @@ flask-wtf
 flask-marshmallow
 pymysql
 flask-bootstrap 
-
+flask-migrate
