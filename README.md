@@ -8,15 +8,11 @@
     $ pip install pipenv
     $ pipenv shell
     $ pip install -r requirements.txt
-
     $ python
-    
     #inside python run the following
-    
     from app import db
     db.create_all()
     exit()
-
     $ python app.py
 
 # Database
