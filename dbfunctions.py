@@ -96,39 +96,48 @@ def search():
         flash(search_results)
     return render_template('search.html', search_results=search_results)
  
+
+ # Get Single Product
+@app.route('/search/<id>', methods=['GET'])
+def get_product(id):
+  product = Product.query.get(id)
+  return redirect(url_for('update_product',id=product.id))
+
  
 # Update a Product
-@app.route('/update/<int:id>', methods=['PUT'])
+@app.route('/search/<int:id>/update', methods=['POST','GET'])
 def update_product(id):
 
   product = Product.query.get(id)
+  form = InsertForm(request.form)
+  if form.validate_on_submit():
+      product.name=form.name.data
+      product.description= form.description.data
+      product.location= form.location.data
+      product.Date= form.Date.data
+      product.Status= form.status.data
+      db.session.commit()
+      return redirect(url_for('search'))
 
-  name = request.json['name']
-  description = request.json['description']
+  form.name.data = product.name
+  form.description.data = product.description
+  form.location.data = product.location
+  form.Date= product.Date
+  form.status.data = product.Status
 
-  product.name = name
-  product.description = description
+  return render_template('/insert.html', form=form)
 
-  db.session.commit()
-
-  return render_template('/insert', form=product)
-
-# Update a Product
-@app.route('/search/delete/<int:id>', methods=['POST'])
+# Delete a Product
+@app.route('/search/delete/<int:id>', methods=['DELETE','GET'])
 def delete_product(id):
+    product = Product.query.get(id)
+    db.session.delete(product)
+    db.session.commit()
+    flash("Product deleted: " + product.name)
+    return render_template('/search.html',search_results=Product.query.all())
 
-  product = Product.query.get(id)
 
-  name = request.json['name']
-  description = request.json['description']
-
-  product.name = name
-  product.description = description
-
-  db.session.commit()
-
-  return render_template('/search', form=product)
-
+#insert a new product
 @app.route('/insert', methods=['GET', 'POST'])
 @login_required
 def add_item():
@@ -139,6 +148,7 @@ def add_item():
         db.session.add(new_product)
         db.session.commit()
         flash('Product insert complete. Product name: ' + insert_data.name.data )
+    
     return render_template('insert.html',form=insert_data)
 
 

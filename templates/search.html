@@ -32,7 +32,6 @@
             {% if search_results %}
                 {% for result in search_results %}
           <tr>
-            <td >{{result.id}}</td>
             <td >{{result.name}}</td>
            
             <td >{{ result.description }}</td>
@@ -40,10 +39,11 @@
             <td >{{ result.location}}</td>
             <td >{{ result.Date }}</td>    
             <td >{{ result.Status }}</td>
-            <form method="POST" action="{{url_for('/delete_product') }}">
+
+            <form method="DELETE" action="{{url_for('delete_product',id=result.id) }}">
               <td > <button type="submit" value="Delete">Delete</button> </td>
             </form>
-            <form method="POST" action="/update">
+            <form method="GET" action="{{url_for('get_product',id=result.id )}}">
               <td > <button type="submit" value="Update">Update</button> </td>
             </form>
           </tr>
