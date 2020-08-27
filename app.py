@@ -5,6 +5,11 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
+#routes
+@app.route('/home')
+def welcome():
+    return render_template('Home.html')  
+
 
 #Run Server
 if __name__== '__main__':
