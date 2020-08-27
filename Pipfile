@@ -1,0 +1,25 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+pipenv = "*"
+psycopg2 = "*"
+gunicorn = "*"
+coverage = "*"
+coveralls = "*"
+flask-marshmallow = "*"
+Flask = "*"
+Flask-SQLAlchemy = "*"
+Werkzeug = "*"
+Flask-WTF = "*"
+Flask-Login = "*"
+Flask-Testing = "*"
+PyMySQL = "*"
+Flask-Bootstrap = "*"
+
+[requires]
+python_version = "3.7"
