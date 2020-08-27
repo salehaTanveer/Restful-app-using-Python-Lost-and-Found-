@@ -20,7 +20,7 @@
     db.create_all()
 
     exit()
-    
+        
     $ python app.py
 
 # Database

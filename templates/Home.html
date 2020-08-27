@@ -3,10 +3,10 @@
   <head>
     <title>Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./static/home.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet"  href="{{ url_for('static', filename='/home.css') }}" >
   </head>
   <body>
-    <div class='bg-home-page'></div>
+    <div class='bg-home-page'>
       <h2>Dashboard</h2>
       <br>
       <h3> <a href="/insert">Insert Data</a></h3>
