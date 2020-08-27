@@ -14,6 +14,7 @@
       {{ message }}
       {% endfor %}
     <hr>
+   
     <table>
         <thead>
           <tr>
@@ -39,12 +40,11 @@
             <td >{{ result.location}}</td>
             <td >{{ result.Date }}</td>    
             <td >{{ result.Status }}</td>
-
-            <form method="DELETE" action="{{url_for('delete_product',id=result.id) }}">
-              <td > <button type="submit" value="Delete">Delete</button> </td>
-            </form>
             <form method="GET" action="{{url_for('get_product',id=result.id )}}">
               <td > <button type="submit" value="Update">Update</button> </td>
+            </form>
+            <form method="DELETE" action="{{url_for('delete_product',id=result.id) }}">
+              <td > <button type="submit" value="Delete">Delete</button> </td>
             </form>
           </tr>
         

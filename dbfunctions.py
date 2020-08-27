@@ -84,21 +84,23 @@ def search():
     flash("Search results displayed based on name or location")                 #flash messages to search.html page
     search_results=[]
     if request.method == 'POST':
-        form = request.form
-        search_value = form['search_string']
-        search_query = "%{0}%".format(search_value)
-        if search_value == "":
-            search_results = Product.query.filter(or_(Product.name.like(search_query),Product.location.like(search_query))).all()
+        form = request.form                                                     # requesting the user form  
+        search_value = form['search_string']                                    # gets the search string from the form
+        search_query = "%{0}%".format(search_value)                             # converting the string in to query format
+        if search_value == "":                                                  # if search box is empty print all products in the database
+            search_results = Product.query.all()
             return render_template('search.html', search_results=search_results)
-        else:
-            search_results = Product.query.filter(Product.name.like(search_query)).all()
+        else:                                                                   #else take string and run a query to display all products having name "Like" search string
+            search_results = Product.query.filter(or_(Product.name.like(search_query),Product.location.like(search_query))).all()
             return render_template('search.html',  search_results=search_results)
         flash(search_results)
     return render_template('search.html', search_results=search_results)
  
 
+
  # Get Single Product
 @app.route('/search/<id>', methods=['GET'])
+@login_required
 def get_product(id):
   product = Product.query.get(id)
   return redirect(url_for('update_product',id=product.id))
@@ -106,6 +108,7 @@ def get_product(id):
  
 # Update a Product
 @app.route('/search/<int:id>/update', methods=['POST','GET'])
+@login_required
 def update_product(id):
 
   product = Product.query.get(id)
@@ -129,6 +132,7 @@ def update_product(id):
 
 # Delete a Product
 @app.route('/search/delete/<int:id>', methods=['DELETE','GET'])
+@login_required
 def delete_product(id):
     product = Product.query.get(id)
     db.session.delete(product)

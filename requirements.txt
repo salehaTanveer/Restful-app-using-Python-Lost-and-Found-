@@ -1,16 +1,13 @@
-Flask
-flask_sqlalchemy
-werkzeug
-psycopg2
-flask-wtf
-flask-login
-gunicorn
-flask-testing
-coverage
-coveralls
-flask-wtf
-flask-marshmallow
-pymysql
-flask-bootstrap 
-flask-migrate
-mashmallow-sqlalchemy
+psycopg2 = "*"
+gunicorn = "*"
+coverage = "*"
+coveralls = "*"
+flask-marshmallow = "*"
+Flask = "*"
+Flask-SQLAlchemy = "*"
+Werkzeug = "*"
+Flask-WTF = "*"
+Flask-Login = "*"
+Flask-Testing = "*"
+PyMySQL = "*"
+Flask-Bootstrap = "*"
