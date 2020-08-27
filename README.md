@@ -10,9 +10,9 @@
     $ pip install -r requirements.txt
 
     $ python
-    >>> from app import db
-    >>> db.create_all()
-    >>> exit()
+      from app import db
+      db.create_all()
+      exit()
 
     $ python app.py
 
