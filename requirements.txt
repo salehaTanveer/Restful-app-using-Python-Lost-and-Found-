@@ -1,4 +1,3 @@
-pipenv
 Flask
 flask_sqlalchemy
 werkzeug

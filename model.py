@@ -1,5 +1,5 @@
 # model.py
-from wtforms import SubmitField, BooleanField, StringField, PasswordField, validators, DateField
+from wtforms import SubmitField, BooleanField, StringField, PasswordField, validators, DateField ,SelectField
 from flask_wtf import Form
 from datetime import date
 
@@ -23,5 +23,5 @@ class InsertForm(Form):
   description = StringField('Product Description', [validators.DataRequired()])
   location = StringField('Product Location',[validators.DataRequired()])
   Date = DateField('Date Found',default=date.today, format='%d-%m-%Y',validators=[validators.DataRequired(message="Date format day-month-year (10-12-2020)")])
-  status = StringField('Product Status',[validators.DataRequired()])
+  status = SelectField('Product Status',choices=[('unclaimed', 'un-claimed'), ('Donate', 'Donate'), ('Claimed', 'Claimed')])
   submit = SubmitField('Submit',[validators.DataRequired()])

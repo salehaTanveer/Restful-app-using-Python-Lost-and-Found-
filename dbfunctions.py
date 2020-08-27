@@ -81,7 +81,7 @@ def home():
 @app.route('/search', methods=['GET', 'POST'])
 @login_required
 def search():
-    flash("Search results displayed based on name or location")
+    flash("Search results displayed based on name or location")                 #flash messages to search.html page
     search_results=[]
     if request.method == 'POST':
         form = request.form
