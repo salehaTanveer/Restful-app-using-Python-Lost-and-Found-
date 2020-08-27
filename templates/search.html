@@ -1,0 +1,48 @@
+# templates/search.html
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<div class="container">
+    <h3>Search and update</h3>
+    <p><a href="/home">Return to home</a></p>
+    <hr>
+    <form method="POST" action="/search">
+        <input type="text" name="search_string">
+        <input type="submit" value="Search">
+      </form>
+      {% for message in get_flashed_messages() %}
+      {{ message }}
+      {% endfor %}
+    <hr>
+    <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>description</th>
+            <th>location</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% if search_results %}
+                {% for result in search_results %}
+          <tr>
+            <td >{{result.name}}</td>
+            <td >{{ result.description }}</td>
+            <td >{{ result.location}}</td>
+            <td >{{ result.Date }}</td>    
+            <td >{{ result.Status }}</td>
+            <td > <button type="submit" value="Delete">Delete</button> </td>
+            <td > <button type="submit" value="Update">Update</button> </td>
+          </tr>
+        
+                  {% endfor %}
+            {% endif %}
+        </tbody>
+      </table>
+    
+
+
+  </div>
+  {% endblock %}
